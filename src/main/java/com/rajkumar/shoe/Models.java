@@ -42,8 +42,8 @@ public class Models {
     public String name, category, emoji;
     @Column(length=500) public String description;
     @Column(name="image_content_type") public String imageContentType;
-    @Lob @Column(name="image_data",columnDefinition="BLOB") @JsonIgnore public byte[] imageData;
-    @Lob @Column(name="variants_data",columnDefinition="CLOB") @JsonIgnore public String variantsData;
+    @Lob @Column(name="image_data") @JsonIgnore public byte[] imageData;
+    @Lob @Column(name="variants_data") @JsonIgnore public String variantsData;
     public int price, mrp, stock; public boolean active=true; }
 
   /** type: MATERIAL|REPAIR|CUSTOM|BULK_REPAIR · paymentMode: ONLINE|PAY_ON_DELIVERY|QUOTE
@@ -61,21 +61,21 @@ public class Models {
     @Column(name="estimated_quantity") public Integer estimatedQuantity;
     @Column(name="razorpay_order_id",length=100) public String razorpayOrderId;
     @Column(name="razorpay_payment_id",length=100) public String razorpayPaymentId;
-    @Lob @Column(name="items_data",columnDefinition="CLOB") public String itemsData;
+    @Lob @Column(name="items_data") public String itemsData;
     public int total, advance, paidAmount; public boolean pickup; @Column(columnDefinition="TIMESTAMP") public LocalDateTime createdAt; }
 
   @Entity @Table(name="order_images") public static class OrderImage {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) public Long id;
     public Long orderId;
     public String fileName, contentType;
-    @Lob @Column(columnDefinition="BLOB") @JsonIgnore public byte[] imageData;
+    @Lob @JsonIgnore public byte[] imageData;
   }
 
   @Entity @Table(name="repair_order_images") public static class RepairOrderImage {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) public Long id;
     public Long orderId;
     public String fileName, contentType;
-    @Lob @Column(name="image_base64", columnDefinition="CLOB") @JsonIgnore public String imageBase64;
+    @Lob @Column(name="image_base64") @JsonIgnore public String imageBase64;
   }
 
   @Entity @Table(name="notifications") public static class Notification {
@@ -91,11 +91,11 @@ public class Models {
   }
 
   @Entity @Table(name="settings") public static class Setting {
-    @Id public String skey; @Column(columnDefinition="CLOB") public String svalue; }
+    @Id public String skey; @Lob public String svalue; }
 
   @Entity @Table(name="rk_staticdata") public static class StaticDataEntry {
     @Id @Column(name="data_key",length=100) public String key;
-    @Lob @Column(name="data_value",columnDefinition="CLOB") public String value;
+    @Lob @Column(name="data_value") public String value;
   }
 
   @Entity @Table(name="customer_feedback",uniqueConstraints=@UniqueConstraint(name="uk_feedback_order",columnNames="order_id"))
