@@ -1021,7 +1021,7 @@ public class Api {
     public Seed(Users u,Settings s,PasswordEncoder e,@Value("${app.admin-phone}") String ph,@Value("${app.admin-password}") String pw){ users=u; this.s=s; enc=e; phone=ph; pass=pw; }
     @Override public void run(String... a){
       if(phone==null||phone.isBlank()||pass==null||pass.isBlank())
-        throw new IllegalStateException("ADMIN_PHONE and ADMIN_PASSWORD must be configured before the owner account can be initialized.");
+        throw new IllegalStateException("app.admin-phone and app.admin-password must be configured before the owner account can be initialized.");
       if(users.findByPhone(phone).isEmpty()){
         AppUser u=users.findByPhone("9999999999").filter(x->"ADMIN".equals(x.role)).orElseGet(()->{
           AppUser owner=new AppUser(); owner.name="Owner"; owner.passwordHash=enc.encode(pass); owner.role="ADMIN"; return owner;
